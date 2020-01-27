@@ -11,9 +11,11 @@ class ScoreStore extends EventEmitter {
   }
 
   updateScore(runs, wickets, overs) {
-    this.score.runs = runs;
-    this.score.wickets = wickets;
-    this.score.overs = overs;
+    this.score = {
+      runs,
+      wickets,
+      overs
+    };
 
     this.emit('change');
   }
