@@ -3,10 +3,24 @@ import scoreStoreInstance from './flux/ScoreStore';
 
 const Playground = () => {
   const [score, setScore] = useState({});
+
+  const subscribeToScoreStore = () => {
+    setScore(scoreStoreInstance.getScore());
+  };
   useEffect(() => {
-    scoreStoreInstance.on('change', () => {
-      setScore(scoreStoreInstance.getScore());
-    });
+    //    Whenever a this component is rerendered (through routing),
+    //  the lambda we passed to store is not removed. There is no way
+    //  to remove a lambda from a publisher's invocation list.
+    //  After a new render of the same component, there are now two listeners
+    //  of which one has been destroyed. But when event is emitted, that first
+    //  function reference is lost and hence, causes the error.
+    //  therefore, make the event listener a named function and use clean up hook to remove it
+    scoreStoreInstance.on('change', subscribeToScoreStore);
+
+    return () => {
+      console.log('unsubscribing from the store');
+      scoreStoreInstance.removeListener('change', subscribeToScoreStore);
+    };
   }, []);
 
   return (
