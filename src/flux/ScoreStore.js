@@ -27,7 +27,12 @@ class ScoreStore extends EventEmitter {
 
   //  single point of contact
   scoreStoreActionHandler(action) {
-    console.log('Store Action Handler called', action);
+    //    Usually, actions are objects that essentially command the store
+    //  Usual structure: {type: CONSTS_ALL_CAPS, data: ...}
+    if (action.type === 'UPDATE_SCORE') {
+      //  We may wish to validate here
+      this.updateScore(action.runs, action.wickets, action.overs);
+    }
   }
 }
 
