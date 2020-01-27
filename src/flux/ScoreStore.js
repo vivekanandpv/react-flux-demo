@@ -45,9 +45,6 @@ class ScoreStore extends EventEmitter {
       default:
         break;
     }
-    if (action.type === 'UPDATE_SCORE') {
-      //  We may wish to validate here
-    }
   }
 }
 
