@@ -25,6 +25,7 @@ class ScoreStore extends EventEmitter {
     return this.score;
   }
 
+  //  single point of contact
   scoreStoreActionHandler(action) {
     console.log('Store Action Handler called', action);
   }
