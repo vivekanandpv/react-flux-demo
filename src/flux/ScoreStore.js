@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import scoreDispatcher from './Dispatcher';
 
 class ScoreStore extends EventEmitter {
   constructor() {
@@ -23,8 +24,16 @@ class ScoreStore extends EventEmitter {
   getScore() {
     return this.score;
   }
+
+  scoreStoreActionHandler(action) {
+    console.log('Store Action Handler called', action);
+  }
 }
 
 const scoreStoreInstance = new ScoreStore();
+
+scoreDispatcher.register(
+  scoreStoreInstance.scoreStoreActionHandler.bind(scoreStoreInstance)
+);
 
 export default scoreStoreInstance;
