@@ -1,18 +1,10 @@
 import React from 'react';
-import { updateScore } from './flux/Actions';
+import { getScoreFromEndpoint } from './flux/Actions';
 import scoreStoreInstance from './flux/ScoreStore';
 
 const Navbar = () => {
-  let runs = scoreStoreInstance.getScore().runs;
-  let wickets = scoreStoreInstance.getScore().wickets;
-  let overs = scoreStoreInstance.getScore().overs;
-
   const updateHandler = () => {
-    runs++;
-    wickets++;
-    overs++;
-
-    updateScore(runs, wickets, overs);
+    getScoreFromEndpoint('http://localhost:3000/api/score');
   };
 
   return (
