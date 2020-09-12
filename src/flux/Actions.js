@@ -1,10 +1,14 @@
-import scoreDispatcher from './Dispatcher';
+import authDispatcher from './Dispatcher';
 
-export const updateScore = (runs, wickets, overs) => {
-  scoreDispatcher.dispatch({
-    type: 'UPDATE_SCORE',
-    runs,
-    wickets,
-    overs
+export const login = (userModel) => {
+  authDispatcher.dispatch({
+    type: 'LOGIN',
+    userModel,
+  });
+};
+
+export const logout = () => {
+  authDispatcher.dispatch({
+    type: 'LOGOUT',
   });
 };

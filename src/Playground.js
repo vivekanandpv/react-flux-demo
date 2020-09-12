@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import scoreStoreInstance from './flux/ScoreStore';
+import React from 'react';
+import { transmitLogout } from './auth_utils/Auth';
+import { logout } from './flux/Actions';
+import Login from './Login';
 
 const Playground = () => {
-  const [score, setScore] = useState({});
-  useEffect(() => {
-    scoreStoreInstance.on('change', () => {
-      setScore(scoreStoreInstance.getScore());
+  const doLogout = () => {
+    transmitLogout().then((response) => {
+      logout();
     });
-  }, []);
+  };
 
   return (
     <React.Fragment>
-      <h3>Learning Flux Architecture</h3>
-      <hr></hr>
-      <p>Runs: {score.runs}</p>
-      <p>Wickets: {score.wickets}</p>
-      <p>Overs: {score.overs}</p>
+      <Login />
+
+      <hr />
+      <button className='btn btn-warning' onClick={doLogout}>
+        Logout
+      </button>
     </React.Fragment>
   );
 };

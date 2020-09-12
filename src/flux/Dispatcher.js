@@ -2,6 +2,6 @@
 
 import { Dispatcher } from 'flux';
 
-const scoreDispatcher = new Dispatcher();
+const authDispatcher = new Dispatcher();
 
-export default scoreDispatcher;
+export default authDispatcher;

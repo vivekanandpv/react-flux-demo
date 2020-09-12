@@ -1,19 +1,17 @@
-import React from 'react';
-import { updateScore } from './flux/Actions';
-import scoreStoreInstance from './flux/ScoreStore';
+import React, { useState, useEffect } from 'react';
+import authStoreInstance from './flux/LoginStore';
 
 const Navbar = () => {
-  let runs = scoreStoreInstance.getScore().runs;
-  let wickets = scoreStoreInstance.getScore().wickets;
-  let overs = scoreStoreInstance.getScore().overs;
+  const [loginStatus, setLoginStatus] = useState(null);
+  useEffect(() => {
+    authStoreInstance.on('login', () => {
+      setLoginStatus(authStoreInstance.getAuthStatus());
+    });
 
-  const updateHandler = () => {
-    runs++;
-    wickets++;
-    overs++;
-
-    updateScore(runs, wickets, overs);
-  };
+    authStoreInstance.on('logout', () => {
+      setLoginStatus(authStoreInstance.getAuthStatus());
+    });
+  }, []);
 
   return (
     <React.Fragment>
@@ -29,9 +27,9 @@ const Navbar = () => {
           Flux Architecture Demo
         </a>
 
-        <button className='btn btn-primary' onClick={updateHandler}>
-          Update Score
-        </button>
+        <h3 className='text-light'>
+          {loginStatus ? loginStatus.displayName : 'Please login'}
+        </h3>
       </nav>
     </React.Fragment>
   );
